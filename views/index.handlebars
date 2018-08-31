@@ -1,0 +1,55 @@
+<h1>Movie Database</h1>
+
+<ul>
+  {{#each movies}}
+  <li>
+    <p>
+      {{this.id}}. {{this.movies}}
+
+      <button data-movie="{{this.id}}" class="deleteMovie">Delete Movie</button>
+    </p>
+  </li>
+  {{/each}}
+</ul>
+
+<h2>Add a Movie</h2>
+<form id="createMovie" class="button-size">
+  <textarea type="text" name="movie"></textarea>
+  <button type="submit">SUBMIT</button>
+</form>
+
+<script type="text/javascript">
+  $('button.deleteMovie').click(function () {
+    let data = $.parseJSON($(this).attr('data-movie'));
+
+    $.ajax("/movies/" + data, {
+      type: "DELETE"
+    }).then(
+      function () {
+        console.log("deleted id ", data);
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+
+  $("#createMovie").on("submit", (event) => {
+    console.log("Submit Clicked: Browser Console");
+    event.preventDefault();
+
+    let newMovie = {
+      // Select the Movie Text Box
+      movies: $("#createMovie [name=movie]").val().trim()
+    };
+
+    $.ajax("/movies", {
+      type: "POST",
+      data: newMovie
+    }).then(
+      function () {
+        console.log("Added new movie");
+        location.reload();
+      }
+    );
+  });
+</script>
