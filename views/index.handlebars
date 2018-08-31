@@ -19,6 +19,7 @@
 </form>
 
 <script type="text/javascript">
+
   $('button.deleteMovie').click(function () {
     let data = $.parseJSON($(this).attr('data-movie'));
 
@@ -32,6 +33,20 @@
       }
     );
   });
+
+  // $(".deleteMovie").on("click", (event) => {
+  //   let id = $('.deleteMovie').data("movie")
+  //   // console.log(this)
+
+  //   $.ajax("/movies/" + id, {
+  //     type: "DELETE"
+  //   }).then(
+  //     function () {
+  //       console.log("deleted id ", id);
+  //       // location.reload(); //COMMENT ON PURPOSE TO BREAK AT RELOAD TO SEE ERROR MESSAGE
+  //     }
+  //   );
+  // });
 
   $("#createMovie").on("submit", (event) => {
     console.log("Submit Clicked: Browser Console");
